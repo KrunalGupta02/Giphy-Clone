@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiEllipsisVertical, HiMiniBars3BottomRight } from "react-icons/hi2";
 import { Link } from "react-router-dom";
+import { GifState } from "../Context/Context";
 
 const Header = () => {
   const [categories, setCategories] = useState([]);
   const [showCategory, setShowCategory] = useState(false);
+
+  const { gf, filter, setFilter, favourite } = GifState();
+
+  const fetchGifCategories = async () => {
+    const { data } = await gf.categories();
+    setCategories(data);
+  };
+
+  useEffect(() => {
+    fetchGifCategories();
+  }, []);
 
   return (
     <nav>
@@ -17,9 +29,18 @@ const Header = () => {
         </Link>
         <div className="font-bold text-md flex gap-2 items-center">
           {/* render categories */}
-          <Link className="px-4 py-1 hover:gradient border-b-4 hidden lg:block">
-            Reactions
-          </Link>
+          {categories?.slice(0, 5)?.map((category) => {
+            return (
+              <Link
+                key={category.name}
+                className="px-4 py-1 hover:gradient border-b-4 hidden lg:block"
+                to={`/${category.name_encoded}`}
+              >
+                {category.name}
+              </Link>
+            );
+          })}
+
           <button>
             <HiEllipsisVertical
               size={35}
@@ -30,9 +51,11 @@ const Header = () => {
             />
           </button>
 
-          <div className="h-9 bg-gray-700 px-6 pt-1.5 cursor-pointer rounded">
-            <Link to="/favourite">Favourite Gif</Link>
-          </div>
+          {favourite.length > 0 && (
+            <div className="h-9 bg-gray-700 px-6 pt-1.5 cursor-pointer rounded">
+              <Link to="/favourite">Favourite Gif</Link>
+            </div>
+          )}
 
           <button>
             <HiMiniBars3BottomRight
@@ -43,10 +66,20 @@ const Header = () => {
         </div>
         {showCategory && (
           <div className="absolute right-0 top-14 px-10 pt-6 pb-9 w-full gradient z-20">
-            <span>Categories</span>
-            <hr />
-            <div>
-              <Link className="font-bold">Reactions</Link>
+            <span className="text-3xl font-extrabold">Categories</span>
+            <hr className="bg-gray-100 opacity-50 my-5" />
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+              {categories?.map((category) => {
+                return (
+                  <Link
+                    to={`/${category.name_encoded}`}
+                    key={category.name}
+                    className="font-bold"
+                  >
+                    {category.name}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         )}

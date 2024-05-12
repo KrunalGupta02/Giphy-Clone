@@ -7,6 +7,7 @@ import Search from "./pages/Search";
 import SingleGif from "./pages/Single-gif";
 import Favourite from "./pages/Favourite";
 import "./index.css";
+import GifProvider from "./Context/Context";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,11 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <GifProvider>
+      <RouterProvider router={router} />;
+    </GifProvider>
+  );
 };
 
 export default App;
