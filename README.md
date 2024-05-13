@@ -1,2 +1,4 @@
 - Add the loader when changing the state
 - Change the context to redux toolkit
+- Use the infinite scrolling in the trending page
+- Add the debounce on the search bar
