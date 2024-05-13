@@ -32,7 +32,10 @@ const GifSearch = () => {
         </button>
       )}
 
-      <button className="bg-gradient-to-r from-pink-600 to-pink-400 text-white px-4 py-2 rounded-tr rounded-br">
+      <button
+        className="bg-gradient-to-r from-pink-600 to-pink-400 text-white px-4 py-2 rounded-tr rounded-br"
+        onClick={searchGif}
+      >
         <HiOutlineMagnifyingGlass size={35} className="scale-x-100" />
       </button>
     </div>
