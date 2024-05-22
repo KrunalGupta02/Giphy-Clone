@@ -30,6 +30,7 @@ const Header = () => {
         </Link>
         <div className="font-bold text-md flex gap-2 items-center">
           {/* render categories */}
+          {/* Only show the 5 categories */}
           {categories?.slice(0, 5)?.map((category) => {
             return (
               <Link
@@ -41,7 +42,6 @@ const Header = () => {
               </Link>
             );
           })}
-
           <button>
             <HiEllipsisVertical
               size={35}
@@ -58,6 +58,7 @@ const Header = () => {
             </div>
           )}
 
+          {/* Mobile hamburger */}
           <button onClick={() => setShowCategory(!showCategory)}>
             <HiMiniBars3BottomRight
               size={30}
@@ -86,7 +87,7 @@ const Header = () => {
         )}
       </div>
 
-      {/* Search */}
+      {/* Search bar component*/}
       <GifSearch />
     </nav>
   );
