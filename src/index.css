@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* This code defines a custom layer within the utilities layer of Tailwind CSS, adding three custom utility classes: */
 @layer utilities {
   .gradient {
     @apply bg-gradient-to-r from-teal-600 via-blue-600 to-pink-600;

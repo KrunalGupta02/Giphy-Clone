@@ -3,27 +3,42 @@ import { useParams } from "react-router-dom";
 import Gif from "../components/Gif";
 import FilterGif from "../components/Filter-gif";
 import { GifState } from "../Context/Context";
+import useInfiniteScroll from "../hooks/useInfiniteScroll";
 
 const Search = () => {
   const [searchResults, setSearchResults] = useState([]);
 
-  const { gf, filter } = GifState();
+  const { gf, filter, setGifs } = GifState();
 
   const { query } = useParams();
+
+  const { loading, pageNumber, setPageNumber, setLoading } =
+    useInfiniteScroll();
 
   const fetchSearchResults = async () => {
     const { data } = await gf.search(query, {
       sort: "relevant",
       lang: "en",
       type: filter,
-      limit: 20,
+      limit: 10,
+      offset: pageNumber * 10,
     });
 
-    setSearchResults(data);
+    // setSearchResults(data);
+    setSearchResults((prevGifs) => Array.from(new Set([...prevGifs, ...data])));
+    setLoading(false);
   };
 
   useEffect(() => {
-    fetchSearchResults();
+    if (loading) {
+      fetchSearchResults();
+    }
+  }, [filter, loading]);
+
+  useEffect(() => {
+    setGifs([]); // Clear previous GIFs on filter change
+    setPageNumber(0); // Reset page number
+    setLoading(true); // Trigger initial load
   }, [filter]);
 
   return (
