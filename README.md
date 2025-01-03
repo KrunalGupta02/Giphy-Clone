@@ -4,6 +4,7 @@
 - Change the state management from context to redux toolkit
 - ~~Use the infinite scrolling in the trending page~~
 - ~~In some gif there is no info on hover fix it~~
+- For the related gifs add the pagination not infinite scrolling
 - Add the skeleton loading
 - share gif / embed gif feature
 - Remove from the favourite from the favourite page
